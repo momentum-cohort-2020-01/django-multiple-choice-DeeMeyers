@@ -21,6 +21,7 @@ from users import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.homepage, name='homepage'),
+    path(include('registration.backends.default.urls')),
 ]
 
 if settings.DEBUG:
