@@ -145,3 +145,6 @@ INTERNAL_IPS = [
 
 #registration-redux not require email verif
 REGISTRATION_AUTO_LOGIN = True
+ACCOUNT_ACTIVATION_DAYS = 700
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+

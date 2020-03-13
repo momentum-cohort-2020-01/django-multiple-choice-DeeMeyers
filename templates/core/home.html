@@ -1,4 +1,14 @@
+<!-- this should be a list of all questions by all user -->
+
 {% extends 'base.html' %}
+{% csrf_token %}
 {% block content%}
 <h2>your homepage bud</h2>
+
+<h3>Latest Borks</h3>
+<ul>
+    {% for dogpost in dogposts %}
+    <li>{{dogpost}}</li>
+    {% endfor %}
+</ul>
 {% endblock content %}

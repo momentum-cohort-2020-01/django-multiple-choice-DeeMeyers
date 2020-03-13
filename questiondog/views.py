@@ -9,4 +9,23 @@ from .models import DogPost, Comment
 
 
 def homepage(request):
-    return render(request, 'core/home.html',)
+    if request.user.is_authenticated:
+        dogposts = DogPost.objects.order_by('-created_at')
+        return render(request, 'core/home.html', {'dogposts': dogposts})
+    else:
+        return redirect('accounts/login/')
+
+def profile(request):
+    posts = DogPost.objects.filter(user = request.user)
+    comments = Comment.objects.filter(commentUser = request.user)
+    return render(request, 'core/profile.html', {'posts': posts, 'comments': comments, } )
+
+def postdetail(request):
+    coments = Comment.objects.filter()
+
+def createPost(request):
+    pass
+
+def createComment(request):
+    pass
+
