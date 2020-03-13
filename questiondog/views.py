@@ -20,8 +20,10 @@ def profile(request):
     comments = Comment.objects.filter(commentUser = request.user)
     return render(request, 'core/profile.html', {'posts': posts, 'comments': comments, } )
 
-def postdetail(request):
-    coments = Comment.objects.filter()
+def postdetail(request, pk):
+    dogpost = DogPost.objects.get(pk=pk)
+    coments = Comment.objects.filter(dogpost_id=pk).order_by('-created_at')
+    return render(request, 'core/dogpostdetail.html', {'dogpost': dogpost, 'comments': coments, })
 
 def createPost(request):
     pass

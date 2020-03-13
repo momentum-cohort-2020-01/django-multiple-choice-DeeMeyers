@@ -8,7 +8,10 @@
 <h3>Latest Borks</h3>
 <ul>
     {% for dogpost in dogposts %}
-    <li>{{dogpost}}</li>
+    <li>
+        <a class="dogpost-title" href="{%url 'postdetail' dogpost.pk %}">{{dogpost}}</a>
+    </li>
+    
     {% endfor %}
 </ul>
 {% endblock content %}

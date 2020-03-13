@@ -23,6 +23,7 @@ urlpatterns = [
     path('', views.homepage, name='homepage'),
     path('accounts/', include('registration.backends.default.urls'), name='login'),
     path('accounts/profile/', views.profile, name='profile'),
+    path('goodboi/<int:pk>/', views.postdetail, name='postdetail'),
 ]
 
 if settings.DEBUG:

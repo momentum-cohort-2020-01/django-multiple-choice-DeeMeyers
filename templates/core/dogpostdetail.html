@@ -2,6 +2,20 @@
 
 {% csrf_token %}
 <h4>Bork Back</h4>
-{% content block %}
+{% block content %}
+
+<div class="dogpost-detail">
+    <h4 class="dogpost-title">{{ dogpost.title }}</h4>
+    <div class="dogpost-body">
+        {{ dogpost.body }}
+    </div>
+</div>
+
+
+{% for comment in comments %}
+<div class="comment">
+    {{ comment.commentBody }}
+</div>
+{% endfor %}
 
 {% endblock %}
