@@ -1,8 +1,10 @@
 from django import forms
-from .models import DogPost, Comments
+from .models import DogPost, Comment
 
-class CommentForm(forms.ModelForm):
+class QuestionForm(forms.ModelForm):
     
     class Meta:
-        model = Comments
-        fields = ('commentBody', )
+        model = DogPost
+        fields = ('title', 'body' )
+
+

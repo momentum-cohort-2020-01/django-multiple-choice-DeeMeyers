@@ -4,8 +4,10 @@ from django.contrib.auth.forms import UserCreationForm
 from django.conf import settings
 from django.contrib.auth.models import User
 from .models import DogPost, Comment
+from .forms import QuestionForm
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_GET, require_POST
+from django.utils import timezone
 
 # Create your views here.
 
@@ -31,8 +33,20 @@ def postdetail(request, pk):
     return render(request, 'core/dogpostdetail.html', {'dogpost': dogpost, 'comments': coments, })
 
 @login_required
-def createPost(request):
-    pass
+def create_post(request):
+    if request.method == "POST":
+        form = QuestionForm(request.POST)
+        title = request.POST.get('title')
+        body = request.POST.get('body')
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.user = request.user
+            post.created_at = timezone.now()
+            post.save()
+            return redirect('profile')
+    else:    
+        form = QuestionForm()
+    return render(request, 'core/newbork.html', {'form': form})
 
 @login_required
 def createComment(request):
