@@ -7,4 +7,11 @@ class QuestionForm(forms.ModelForm):
         model = DogPost
         fields = ('title', 'body' )
 
+class CommentForm(forms.ModelForm):
+
+    class Meta:
+        model = Comment
+        fields = ('commentBody',)
+
+
 

@@ -17,4 +17,13 @@
 </div>
 {% endfor %}
 
+<form class="new-comment" method="POST">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" class="button" value="ROOF">
+</form>
+
+
+
+
 {% endblock %}

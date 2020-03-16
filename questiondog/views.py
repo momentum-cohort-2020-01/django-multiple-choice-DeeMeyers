@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.conf import settings
 from django.contrib.auth.models import User
 from .models import DogPost, Comment
-from .forms import QuestionForm
+from .forms import QuestionForm, CommentForm
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_GET, require_POST
 from django.utils import timezone
@@ -30,7 +30,19 @@ def profile(request):
 def postdetail(request, pk):
     dogpost = DogPost.objects.get(pk=pk)
     coments = Comment.objects.filter(dogpost_id=pk).order_by('-created_at')
-    return render(request, 'core/dogpostdetail.html', {'dogpost': dogpost, 'comments': coments, })
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        commentBody = request.POST.get('body')
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.commentUser = request.user
+            post.created_at = timezone.now()
+            post.dogpost = dogpost
+            post.save()
+            return redirect('profile')
+    else:    
+        form = CommentForm()
+    return render(request, 'core/dogpostdetail.html', {'dogpost': dogpost, 'comments': coments, 'form': form, })
 
 @login_required
 def create_post(request):
@@ -50,5 +62,6 @@ def create_post(request):
 
 @login_required
 def createComment(request):
+
     pass
 
