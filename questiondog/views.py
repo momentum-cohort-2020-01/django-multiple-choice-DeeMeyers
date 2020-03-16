@@ -39,7 +39,7 @@ def postdetail(request, pk):
             post.created_at = timezone.now()
             post.dogpost = dogpost
             post.save()
-            return redirect('profile')
+            return redirect(f'/goodboi/{pk}/')
     else:    
         form = CommentForm()
     return render(request, 'core/dogpostdetail.html', {'dogpost': dogpost, 'comments': coments, 'form': form, })

@@ -17,5 +17,9 @@ class Comment(models.Model):
     def __str__(self):
         return f'{self.dogpost}: {self.commentBody}'
 
-# class VoteLog(model.Models):
-    
+class CommentVoteLog(models.Model):
+    voter = models.ForeignKey(to=User, related_name='vote', on_delete=models.CASCADE)
+    comment = models.ForeignKey(to=Comment, related_name='dogposts', on_delete=models.CASCADE, null=True, blank=True)
+    rankValue = models.IntegerField()
+    def __str__(self):
+        return f'{self.rankValue}'
