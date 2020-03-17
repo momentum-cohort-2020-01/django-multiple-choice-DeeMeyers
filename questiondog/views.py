@@ -30,7 +30,7 @@ def profile(request):
 def postdetail(request, pk):
     dogpost = DogPost.objects.get(pk=pk)
     coments = Comment.objects.filter(dogpost_id=pk).order_by('-created_at')
-    if request.method == "POST":
+    if request.method == "POST" and "subcomment":
         form = CommentForm(request.POST)
         commentBody = request.POST.get('body')
         if form.is_valid():
@@ -40,6 +40,10 @@ def postdetail(request, pk):
             post.dogpost = dogpost
             post.save()
             return redirect(f'/goodboi/{pk}/')
+    elif request.method == "POST" and "upvote":
+        pass
+    elif request.method == "POST" and "downvote":
+        pass
     else:    
         form = CommentForm()
     return render(request, 'core/dogpostdetail.html', {'dogpost': dogpost, 'comments': coments, 'form': form, })

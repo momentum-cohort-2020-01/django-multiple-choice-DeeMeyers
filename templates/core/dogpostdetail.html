@@ -15,14 +15,14 @@
 <div class="comment">
     {{ comment.commentBody }}
 </div>
-<input type="submit" class="up-button" value="GOOD BOI">
-<input type="submit" class="down-button" value="BAD DOG">
+<input type="submit" class="up-button" name="upvote" value="GOOD BOI">
+<input type="submit" class="down-button" name="downvote" value="BAD DOG">
 {% endfor %}
 
 <form class="new-comment" method="POST">
     {% csrf_token %}
     {{ form }}
-    <input type="submit" class="button" value="ROOF">
+    <input type="submit" class="button" name="subcomment" value="ROOF">
 </form>
 
 
