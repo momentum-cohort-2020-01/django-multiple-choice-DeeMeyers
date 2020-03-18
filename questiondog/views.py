@@ -3,8 +3,8 @@ from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
 from django.conf import settings
 from django.contrib.auth.models import User
-from .models import DogPost, Comment
-from .forms import QuestionForm, CommentForm
+from .models import DogPost, Comment, CommentVoteLog
+from .forms import QuestionForm, CommentForm, CommentVoteLogForm
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_GET, require_POST
 from django.utils import timezone
@@ -40,13 +40,26 @@ def postdetail(request, pk):
             post.dogpost = dogpost
             post.save()
             return redirect(f'/goodboi/{pk}/')
-    elif request.method == "POST" and "upvote":
-        pass
-    elif request.method == "POST" and "downvote":
-        pass
+
     else:    
         form = CommentForm()
     return render(request, 'core/dogpostdetail.html', {'dogpost': dogpost, 'comments': coments, 'form': form, })
+
+@login_required
+def vote(request, pk):
+    if request.method == "POST" and "upvote":
+        form = CommentVoteLogForm(request.POST)
+        # log = get or create (commentvotelog), returns bolean 
+        comment = get_object_or_404(Comment, pk=pk)
+        if form.is_valid():
+            log = form.save(commit=False)
+            log.voter = request.user
+            log.comment = comment
+            log.rankValue = 1
+            log.save()
+            return redirect(f'/goodboi/{comment.dogpost.pk}/')
+    elif request.method == "POST" and "downvote":
+        return redirect(f'/goodboi/{comment.dogpost.pk}/')
 
 @login_required
 def create_post(request):

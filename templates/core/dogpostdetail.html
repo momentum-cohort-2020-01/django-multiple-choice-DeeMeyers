@@ -14,9 +14,16 @@
 {% for comment in comments %}
 <div class="comment">
     {{ comment.commentBody }}
+
 </div>
-<input type="submit" class="up-button" name="upvote" value="GOOD BOI">
-<input type="submit" class="down-button" name="downvote" value="BAD DOG">
+<form action={% url 'vote' comment.pk %} class="votes" method="POST" >
+    {% csrf_token %}
+    <input type="submit" class="button" name="upvote" value="GOOD BOI">
+</form>
+<form action={& urls 'vote' comment.pk %}class="vote" method="POST"> 
+    {% csrf_token %}
+    <input type="submit" class="button" name="downvote" value="BAD DOG">
+</form>
 {% endfor %}
 
 <form class="new-comment" method="POST">

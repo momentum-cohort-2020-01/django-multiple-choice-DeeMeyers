@@ -25,6 +25,8 @@ urlpatterns = [
     path('accounts/profile/', views.profile, name='profile'),
     path('goodboi/<int:pk>/', views.postdetail, name='postdetail'),
     path('goodboi/newbork/', views.create_post, name='createpost'),
+    path('goodboi/comment/<int:pk>/upvote/', views.vote, name='vote'),
+
 ]
 
 if settings.DEBUG:
