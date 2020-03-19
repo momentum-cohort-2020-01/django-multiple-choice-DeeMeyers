@@ -20,7 +20,7 @@
     {% csrf_token %}
     <input type="submit" class="button" name="upvote" value="GOOD BOI">
 </form>
-<form action={& urls 'vote' comment.pk %}class="vote" method="POST"> 
+<form action={% url 'vote' comment.pk %} class="votes" method="POST"> 
     {% csrf_token %}
     <input type="submit" class="button" name="downvote" value="BAD DOG">
 </form>

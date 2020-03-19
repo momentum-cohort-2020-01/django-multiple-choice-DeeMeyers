@@ -22,4 +22,4 @@ class CommentVoteLog(models.Model):
     comment = models.ForeignKey(to=Comment, related_name='dogposts', on_delete=models.CASCADE, null=True, blank=True)
     rankValue = models.IntegerField()
     def __str__(self):
-        return f'{self.rankValue}'
+        return f'{self.comment}, {self.rankValue}'

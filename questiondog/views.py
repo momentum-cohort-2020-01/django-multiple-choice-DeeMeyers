@@ -49,17 +49,24 @@ def postdetail(request, pk):
 def vote(request, pk):
     if request.method == "POST" and "upvote":
         form = CommentVoteLogForm(request.POST)
-        # log = get or create (commentvotelog), returns bolean 
         comment = get_object_or_404(Comment, pk=pk)
         if form.is_valid():
-            log = form.save(commit=False)
-            log.voter = request.user
-            log.comment = comment
-            log.rankValue = 1
-            log.save()
+            obj, created = CommentVoteLog.objects.update_or_create(
+                voter = request.user, comment = comment,
+                defaults={'rankValue': 1}
+            )
+            # obj.save()
             return redirect(f'/goodboi/{comment.dogpost.pk}/')
     elif request.method == "POST" and "downvote":
-        return redirect(f'/goodboi/{comment.dogpost.pk}/')
+        form = CommentVoteLogForm(request.POST)
+        comment = get_object_or_404(Comment, pk=pk)
+        if form.is_valid():
+            obj, created = CommentVoteLog.objects.update_or_create(
+                voter = request.user, comment = comment,
+                defaults={'rankValue': -1}
+            )
+            # obj.save()
+            return redirect(f'/goodboi/{comment.dogpost.pk}/')
 
 @login_required
 def create_post(request):
