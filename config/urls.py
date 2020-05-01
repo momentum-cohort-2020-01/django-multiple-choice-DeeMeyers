@@ -16,12 +16,17 @@ Including another URLconf
 from django.contrib import admin
 from django.conf import settings
 from django.urls import include, path   
-from users import views
+from questiondog import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.homepage, name='homepage'),
     path('accounts/', include('registration.backends.default.urls'), name='login'),
+    path('accounts/profile/', views.profile, name='profile'),
+    path('goodboi/<int:pk>/', views.postdetail, name='postdetail'),
+    path('goodboi/newbork/', views.create_post, name='createpost'),
+    path('goodboi/comment/<int:pk>/upvote/', views.vote, name='vote'),
+
 ]
 
 if settings.DEBUG:

@@ -1,0 +1,18 @@
+<!-- this should be a list of all the user's posts and comments -->
+{% extends 'base.html' %}
+{% csrf_token %}
+{% block content %}
+<h2>you've made it home. good dog.</h2>
+<h1>Your Posts</h1>
+<ul>
+    {% for post in posts %}
+    <li>{{ post.title }}</li>
+    {% endfor %}
+</ul>
+<h1>Your comments</h1>
+<ul>
+    {% for comment in comments %}
+    <li>{{ comment }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}
